@@ -1,93 +1,95 @@
-# AI Projects Hub & Suite
+# ⚽ Antigravity 3D Soccer - FIFA Virtual League & AI Suite
 
-Repositorio para experimentación, desarrollo y despliegue de soluciones de Inteligencia Artificial (RAG, Agentes Autónomos y Visión Multimodal).
+Videojuego de fútbol virtual en 3D avanzado con experiencia inmersiva estilo FIFA / EA FC, física balística en tiempo real, múltiples clubes oficiales, estadios legendarios y suite de módulos de Inteligencia Artificial.
 
 ---
 
-## 📁 Estructura del Proyecto
+## 🎮 Jugar Antigravity 3D Soccer
+
+¡No requiere instalar motores pesados! Ejecútalo directamente en tu navegador (Google Chrome, Safari, Edge):
+
+```bash
+# Abrir directamente en macOS:
+open index.html
+```
+
+O abre `index.html` con doble clic desde tu explorador de archivos.
+
+---
+
+## ⭐ Características del Juego 3D
+
+### 1. 🏟️ Estadios Legendarios 3D
+* **Santiago Bernabéu (Madrid):** Techo metálico, iluminación nocturna brillante con 4 torres de focos LED y césped impecable a rayas.
+* **Spotify Camp Nou (Barcelona):** Gradas azulgranas masivas, atmósfera de atardecer y corte de césped ajedrezado.
+* **Wembley Stadium (Londres):** Icónico arco estructural, tribunas rojas y blancas, atmósfera majestuosa.
+* **La Bombonera (Buenos Aires):** Gradas verticales auriazules, vibrante ambiente y tribunas pegadas a la cancha.
+
+### 2. 🛡️ Clubes y Plantillas Reales
+* **Real Madrid (93):** Courtois, Carvajal, Rüdiger, Valverde, Bellingham, Rodrygo, Mbappé, Vinícius Jr.
+* **FC Barcelona (91):** Ter Stegen, Koundé, Araújo, Balde, Pedri, De Jong, Lamine Yamal, Lewandowski, Raphinha.
+* **Manchester City (93):** Ederson, Walker, Rúben Dias, Rodri, De Bruyne, Bernardo Silva, Foden, Haaland.
+* **Inter Miami CF (87):** Callender, Jordi Alba, Sergio Busquets, Messi, Luis Suárez.
+* **Boca Juniors (86):** Romero, Advíncula, Marcos Rojo, Zenón, Cavani, Merentiel.
+* **River Plate (86):** Armani, Acuña, Pezzella, Mastantuono, Borja, Colidio.
+
+### 3. 🎯 Controles de Juego
+
+| Acción | Teclas (PC / Mac) |
+|---|---|
+| **Moverse / Regatear** | `W`, `A`, `S`, `D` o Flechas del teclado |
+| **Sprint / Acelerar** | `Shift` (mientras te mueves) |
+| **Disparo a Gol (Potencia cargable)** | `Espacio` o `J` (mantener para cargar barra de potencia) |
+| **Pase Corto al pie** | `K` o `X` |
+| **Pase al Hueco / Filtrado** | `L` o `C` |
+| **Cambiar Jugador activo** | `Q` o `E` |
+| **Cambiar Ángulo de Cámara** | `V` (Tele Broadcast, Action Cam, Tactical) |
+| **Silenciar / Activar Sonido** | `M` |
+
+### 4. 🚀 Motor y Física en Tiempo Real
+* **Gráficos 3D:** Construido con Three.js, sombras suaves (PCFSoftShadowMap), reflejos y vallas publicitarias LED animadas.
+* **Física Balística:** Gravedad realista, fricción con el césped, efecto rebote elástico en palos/travesaño y amortiguación en redes de portería.
+* **Sonido Sintetizado (Web Audio API):** Silbato realista de árbitro, impacto de golpeo de balón, sonido metálico en postes y rugido dinámico del público en ocasiones de gol.
+* **Minimapa Radar 2D:** Muestra en tiempo real la posición de los 22 futbolistas y el balón en la cancha.
+* **Celebración Cinemática:** Cámaras lentas 360°, pancarta de ¡GOOOOL! y lluvia de confeti tras cada anotación.
+
+---
+
+## 📁 Estructura del Repositorio
 
 ```text
-├── src/
-│   ├── config.py              # Gestión de variables de entorno y parámetros
+├── index.html                 # Punto de entrada del juego 3D
+├── css/
+│   └── style.css              # Interfaz moderna FIFA / EA FC (Scoreboard, Radar, Menús)
+├── js/
+│   ├── constants.js           # Clubes, plantillas, estadios y dimensiones reglamentarias
+│   ├── audio.js               # Motor de sonido procedural (silbatos, hinchada, disparos)
+│   ├── stadium.js             # Generador 3D de estadios, tribunas, arcos y focos
+│   ├── ball.js                # Física balística y colisiones del balón
+│   ├── player.js              # Modelos 3D, animación procedural de zancada e IA
+│   └── game.js                # Controlador de partido, HUD, cámaras y reglas
+├── src/                       # Suite de Inteligencia Artificial (Backend/Python)
+│   ├── config.py              # Variables de entorno
 │   └── modules/
-│       ├── rag.py             # Sistema RAG (Retrieval-Augmented Generation)
-│       ├── agent.py           # Agentes autónomos orientados a tareas
+│       ├── rag.py             # Asistente RAG con documentos
+│       ├── agent.py           # Agentes autónomos
 │       └── vision.py          # Análisis multimodal con Gemini Vision
-├── main.py                    # CLI principal para ejecutar y probar módulos
-├── requirements.txt           # Dependencias del proyecto
-├── .env.example               # Plantilla de variables de entorno
-└── .gitignore                 # Exclusión de archivos y secretos
+├── main.py                    # CLI de IA
+└── requirements.txt           # Dependencias Python
 ```
 
 ---
 
-## 🚀 Módulos Incluidos
-
-1. **RAG Assistant (`src/modules/rag.py`)**:
-   - Indexación semántica y búsqueda de contexto en documentos.
-   - Generación de respuestas asistidas con fuentes citadas.
-
-2. **Autonomous Agent (`src/modules/agent.py`)**:
-   - Planificación de tareas de múltiples pasos.
-   - Registro de herramientas y ejecución estructurada.
-
-3. **Multimodal Vision (`src/modules/vision.py`)**:
-   - Integración con modelos multimodales (Gemini 2.5 Flash / Vision).
-   - Extracción de información visual e inspección de imágenes.
-
----
-
-## 🛠️ Instalación y Configuración
+## 🛠️ Instalación y Desarrollo
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/ivancamargo-rgb/labantigravity.git
+git clone git@github.com:ivancamargo-rgb/labantigravity.git
 cd labantigravity
 ```
 
-### 2. Configurar entorno virtual (Python 3.10+)
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-> **Nota para macOS:** Si es la primera vez que usas Python en tu Mac, instala las herramientas de desarrollador ejecutando en tu terminal:
-> ```bash
-> xcode-select --install
-> ```
-
-### 3. Configurar API Keys
-Copia la plantilla de variables de entorno y agrega tu clave de Gemini:
-```bash
-cp .env.example .env
-```
-
-Edita `.env`:
-```ini
-GEMINI_API_KEY=tu_api_key_aqui
-GEMINI_MODEL=gemini-2.5-flash
-```
-
----
-
-## 💻 Uso
-
-Ejecuta el menú CLI o prueba módulos individuales:
-
-```bash
-# Ejecutar demostración completa
-python3 main.py --module all
-
-# Probar solo el asistente RAG
-python3 main.py --module rag
-
-# Probar el agente autónomo
-python3 main.py --module agent
-
-# Probar el módulo de visión
-python3 main.py --module vision
-```
+### 2. Ejecutar el juego
+Basta con abrir `index.html` en cualquier navegador web.
 
 ---
 

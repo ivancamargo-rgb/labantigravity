@@ -1,0 +1,386 @@
+/**
+ * Antigravity 3D Soccer - EA Sports / FIFA Inspired Modern UI
+ */
+
+:root {
+    --primary: #00ffcc;
+    --primary-glow: rgba(0, 255, 204, 0.4);
+    --gold: #ffc72c;
+    --dark-bg: rgba(10, 15, 28, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --text-white: #ffffff;
+    --text-dim: #94a3b8;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #030712;
+    color: var(--text-white);
+}
+
+#canvas-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* UI Overlay Layer */
+#ui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Top Broadcast Scoreboard */
+.scoreboard {
+    position: absolute;
+    top: 24px;
+    left: 28px;
+    display: flex;
+    align-items: center;
+    background: var(--dark-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.team-badge {
+    padding: 10px 18px;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.score-box {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 16px;
+    font-size: 22px;
+    font-weight: 900;
+    color: #ffffff;
+    gap: 8px;
+}
+
+.timer-box {
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.08);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.cam-badge {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    padding: 8px 16px;
+    background: var(--dark-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--primary);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* Bottom Player & Power HUD */
+.bottom-hud {
+    position: absolute;
+    bottom: 24px;
+    left: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.player-card {
+    background: var(--dark-bg);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.power-bar-container {
+    width: 220px;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--glass-border);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.power-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #00ffcc, #ffc72c, #ff3b30);
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
+    transition: width 0.05s ease-out;
+}
+
+/* Radar Minimap */
+.radar-container {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10, 20, 35, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+#radar-canvas {
+    display: block;
+    width: 170px;
+    height: 110px;
+    border-radius: 8px;
+}
+
+/* Controls Guide Box */
+.controls-guide {
+    position: absolute;
+    bottom: 24px;
+    right: 28px;
+    background: var(--dark-bg);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 12px 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+}
+
+.controls-guide h4 {
+    color: var(--primary);
+    margin-bottom: 6px;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+.control-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 4px;
+    color: #cbd5e1;
+}
+
+.key-tag {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Goal Celebration Banner */
+.goal-banner {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.4);
+    background: linear-gradient(135deg, rgba(255, 199, 44, 0.95), rgba(255, 65, 54, 0.95));
+    padding: 30px 70px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(255, 65, 54, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.goal-banner.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.goal-text {
+    font-size: 64px;
+    font-weight: 900;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.goal-subtext {
+    font-size: 24px;
+    font-weight: 800;
+    color: #111111;
+    margin-top: 6px;
+}
+
+/* Main Match Setup Modal */
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(4, 7, 18, 0.88);
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: opacity 0.4s ease;
+}
+
+.modal-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.menu-card {
+    background: rgba(15, 23, 42, 0.92);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 36px 42px;
+    width: 90%;
+    max-width: 880px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+}
+
+.menu-title {
+    font-size: 32px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #00ffcc, #ffc72c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.menu-subtitle {
+    text-align: center;
+    color: var(--text-dim);
+    margin-bottom: 30px;
+    font-size: 15px;
+}
+
+.selection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.select-group label {
+    display: block;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.styled-select {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.styled-select:hover, .styled-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.btn-start {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(90deg, #00ffcc, #00b4d8);
+    color: #050c18;
+    border: none;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 255, 204, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 40px rgba(0, 255, 204, 0.6);
+}
+
+/* Touch Control buttons for mobile/touchpad */
+.touch-controls {
+    position: absolute;
+    bottom: 24px;
+    right: 28px;
+    display: flex;
+    gap: 12px;
+    pointer-events: auto;
+}
+
+.touch-btn {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--dark-bg);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--primary);
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.touch-btn:active {
+    background: var(--primary);
+    color: #000;
+}

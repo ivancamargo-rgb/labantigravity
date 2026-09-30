@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity 3D Soccer - FIFA Virtual League</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Three.js 3D Graphics Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- 3D WebGL Canvas Container -->
+    <div id="canvas-container"></div>
+
+    <!-- UI Overlay Layer -->
+    <div id="ui-overlay">
+        <!-- Top Scoreboard -->
+        <div class="scoreboard">
+            <div id="home-name" class="team-badge" style="color: #ffffff;">RMA</div>
+            <div class="score-box">
+                <span id="home-score">0</span>
+                <span>-</span>
+                <span id="away-score">0</span>
+            </div>
+            <div id="away-name" class="team-badge" style="color: #edbb00;">FCB</div>
+            <div class="timer-box">
+                <span>⏱</span>
+                <span id="match-timer">00:00</span>
+            </div>
+        </div>
+
+        <!-- Camera Angle Toggle Badge -->
+        <div id="cam-badge" class="cam-badge" onclick="if(window.game) window.game.cycleCamera();">
+            CAM: TELE BROADCAST (V)
+        </div>
+
+        <!-- Audio Mute Button -->
+        <div id="audio-toggle-btn" class="cam-badge" style="right: 210px; cursor: pointer;" onclick="if(window.soundEngine) { const m = window.soundEngine.toggleMute(); this.textContent = m ? '🔇' : '🔊'; }">
+            🔊
+        </div>
+
+        <!-- Bottom Left: Active Player Card & Shot Power Gauge -->
+        <div class="bottom-hud">
+            <div class="player-card">
+                <span style="font-size: 18px;">⚡</span>
+                <span id="player-name-badge">9. Mbappé (ST)</span>
+            </div>
+            <div class="power-bar-container">
+                <div id="power-bar-fill" class="power-bar-fill"></div>
+            </div>
+        </div>
+
+        <!-- Bottom Center: 2D Radar Minimap -->
+        <div class="radar-container">
+            <canvas id="radar-canvas" width="170" height="110"></canvas>
+        </div>
+
+        <!-- Bottom Right: Keyboard Controls Guide -->
+        <div class="controls-guide">
+            <h4>⚽ CONTROLES DE JUEGO</h4>
+            <div class="control-item"><span>Moverse / Regatear</span><span class="key-tag">W A S D / Flechas</span></div>
+            <div class="control-item"><span>Sprintar</span><span class="key-tag">Shift</span></div>
+            <div class="control-item"><span>Disparo a Gol</span><span class="key-tag">Espacio / J (Mantener)</span></div>
+            <div class="control-item"><span>Pase Corto</span><span class="key-tag">K / X</span></div>
+            <div class="control-item"><span>Pase al Hueco</span><span class="key-tag">L / C</span></div>
+            <div class="control-item"><span>Cambiar Jugador</span><span class="key-tag">Q / E</span></div>
+            <div class="control-item"><span>Cambiar Cámara</span><span class="key-tag">V</span></div>
+        </div>
+
+        <!-- Goal Celebration Banner -->
+        <div id="goal-banner" class="goal-banner">
+            <div class="goal-text">¡¡GOOOOOOL!!</div>
+            <div id="goal-team-name" class="goal-subtext">Real Madrid</div>
+        </div>
+    </div>
+
+    <!-- Match Setup & Team Selection Modal -->
+    <div id="match-modal" class="modal-overlay">
+        <div class="menu-card">
+            <h1 class="menu-title">⚽ ANTIGRAVITY FC 3D</h1>
+            <p class="menu-subtitle">Experiencia de Fútbol Virtual 3D Avanzada en Tiempo Real</p>
+
+            <div class="selection-grid">
+                <!-- Home Team Selector -->
+                <div class="select-group">
+                    <label for="select-home">Equipo Local (Tú)</label>
+                    <select id="select-home" class="styled-select">
+                        <option value="real_madrid" selected>⚪ Real Madrid (93)</option>
+                        <option value="barcelona">🔴🔵 FC Barcelona (91)</option>
+                        <option value="man_city">🩵 Manchester City (93)</option>
+                        <option value="inter_miami">🩷 Inter Miami CF (87)</option>
+                        <option value="boca_juniors">🟡🔵 Boca Juniors (86)</option>
+                        <option value="river_plate">⚪🔴 River Plate (86)</option>
+                    </select>
+                </div>
+
+                <!-- Away Team Selector -->
+                <div class="select-group">
+                    <label for="select-away">Equipo Visitante (IA)</label>
+                    <select id="select-away" class="styled-select">
+                        <option value="barcelona" selected>🔴🔵 FC Barcelona (91)</option>
+                        <option value="real_madrid">⚪ Real Madrid (93)</option>
+                        <option value="man_city">🩵 Manchester City (93)</option>
+                        <option value="inter_miami">🩷 Inter Miami CF (87)</option>
+                        <option value="boca_juniors">🟡🔵 Boca Juniors (86)</option>
+                        <option value="river_plate">⚪🔴 River Plate (86)</option>
+                    </select>
+                </div>
+
+                <!-- Stadium Selector -->
+                <div class="select-group">
+                    <label for="select-stadium">Estadio Oficial</label>
+                    <select id="select-stadium" class="styled-select">
+                        <option value="bernabeu" selected>🏟️ Santiago Bernabéu (Madrid)</option>
+                        <option value="camp_nou">🏟️ Spotify Camp Nou (Barcelona)</option>
+                        <option value="wembley">🏟️ Wembley Stadium (Londres)</option>
+                        <option value="bombonera">🏟️ La Bombonera (Buenos Aires)</option>
+                    </select>
+                </div>
+
+                <!-- Match Time / Difficulty -->
+                <div class="select-group">
+                    <label for="select-difficulty">Dificultad de la IA</label>
+                    <select id="select-difficulty" class="styled-select">
+                        <option value="pro" selected>⭐ Profesional / Leyenda</option>
+                        <option value="medium">⭐ Clase Mundial</option>
+                        <option value="easy">⭐ Principiante</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="btn-start-match" class="btn-start">
+                JUGAR PARTIDO
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Scripts -->
+    <script src="js/constants.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/stadium.js"></script>
+    <script src="js/ball.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/game.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const startBtn = document.getElementById("btn-start-match");
+            const modal = document.getElementById("match-modal");
+
+            startBtn.addEventListener("click", () => {
+                const homeKey = document.getElementById("select-home").value;
+                const awayKey = document.getElementById("select-away").value;
+                const stadiumKey = document.getElementById("select-stadium").value;
+
+                modal.classList.add("hidden");
+
+                // Initialize Game
+                window.game = new SoccerGame();
+                window.game.startMatch(homeKey, awayKey, stadiumKey);
+            });
+        });
+    </script>
+</body>
+</html>
