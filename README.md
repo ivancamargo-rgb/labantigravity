@@ -41,8 +41,8 @@ Repositorio para experimentación, desarrollo y despliegue de soluciones de Inte
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/ivancamargo-rgb/<NOMBRE_DEL_REPO>.git
-cd <NOMBRE_DEL_REPO>
+git clone https://github.com/ivancamargo-rgb/labantigravity.git
+cd labantigravity
 ```
 
 ### 2. Configurar entorno virtual (Python 3.10+)
