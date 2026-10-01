@@ -1,0 +1,533 @@
+/**
+ * ESMERALDA Studio - Enterprise Google Cloud & Vertex AI Console UI
+ */
+
+:root {
+    --bg-dark: #070b14;
+    --bg-panel: rgba(15, 23, 42, 0.82);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --emerald: #00e599;
+    --emerald-glow: rgba(0, 229, 153, 0.35);
+    --vertex-cyan: #00c1ff;
+    --gcp-blue: #4285f4;
+    --danger-red: #ff453a;
+    --danger-glow: rgba(255, 69, 58, 0.4);
+    --warn-amber: #ffb300;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --font-mono: "SF Mono", Monaco, "Cascadia Code", Consolas, monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================================================================
+   TOP APP BAR / NAVBAR
+   ========================================================================= */
+header.app-bar {
+    height: 60px;
+    background: rgba(10, 15, 28, 0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 50;
+}
+
+.brand-section {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, var(--emerald), var(--vertex-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-badge {
+    background: rgba(0, 229, 153, 0.12);
+    border: 1px solid rgba(0, 229, 153, 0.3);
+    color: var(--emerald);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+.system-status-pills {
+    display: flex;
+    gap: 12px;
+}
+
+.status-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--emerald);
+    box-shadow: 0 0 8px var(--emerald);
+}
+
+/* =========================================================================
+   SCENARIO ACTION BAR
+   ========================================================================= */
+.scenario-bar {
+    background: rgba(15, 23, 42, 0.95);
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.scenario-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.scenario-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.scenario-btn:hover {
+    background: rgba(0, 229, 153, 0.15);
+    border-color: var(--emerald);
+    color: #ffffff;
+    box-shadow: 0 0 12px var(--emerald-glow);
+}
+
+.scenario-btn.active {
+    background: var(--emerald);
+    color: #070b14;
+    font-weight: 800;
+    border-color: var(--emerald);
+}
+
+.scenario-btn.danger:hover {
+    background: rgba(255, 69, 58, 0.2);
+    border-color: var(--danger-red);
+    box-shadow: 0 0 12px var(--danger-glow);
+}
+
+/* =========================================================================
+   MAIN WORKSPACE SPLIT (Topology Left | Console Right)
+   ========================================================================= */
+.main-workspace {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    overflow: hidden;
+}
+
+/* =========================================================================
+   LEFT: INTERACTIVE ARCHITECTURE TOPOLOGY MAP
+   ========================================================================= */
+.topology-panel {
+    background: #080d19;
+    border-right: 1px solid var(--border-color);
+    padding: 20px;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.world-zone {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 16px;
+    position: relative;
+}
+
+.world-zone.world-above {
+    border-left: 4px solid var(--vertex-cyan);
+}
+
+.world-zone.world-below {
+    border-left: 4px solid var(--emerald);
+}
+
+.zone-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.zone-badge {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+.badge-above {
+    background: rgba(0, 193, 255, 0.15);
+    color: var(--vertex-cyan);
+    border: 1px solid rgba(0, 193, 255, 0.3);
+}
+
+.badge-below {
+    background: rgba(0, 229, 153, 0.15);
+    color: var(--emerald);
+    border: 1px solid rgba(0, 229, 153, 0.3);
+}
+
+/* Grid of Architectural Nodes */
+.nodes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.arch-node {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.arch-node:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(30, 41, 59, 0.95);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.arch-node.active {
+    border-color: var(--emerald);
+    box-shadow: 0 0 20px var(--emerald-glow);
+    background: rgba(0, 229, 153, 0.12);
+}
+
+.arch-node.blocked {
+    border-color: var(--danger-red);
+    box-shadow: 0 0 25px var(--danger-glow);
+    background: rgba(255, 69, 58, 0.15);
+    animation: shake 0.4s ease;
+}
+
+.arch-node.failed {
+    border-color: var(--warn-amber);
+    box-shadow: 0 0 15px rgba(255, 179, 0, 0.4);
+}
+
+.node-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.node-subtitle {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.node-tech-tag {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    color: var(--vertex-cyan);
+    margin-top: 6px;
+    display: inline-block;
+    background: rgba(0, 193, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* =========================================================================
+   RIGHT: CONSOLE & INSPECTOR PANELS
+   ========================================================================= */
+.console-panel {
+    background: var(--bg-panel);
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.tabs-nav {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(10, 15, 28, 0.6);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px 14px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.tab-btn:hover {
+    color: var(--text-primary);
+}
+
+.tab-btn.active {
+    color: var(--emerald);
+    border-bottom-color: var(--emerald);
+    background: rgba(0, 229, 153, 0.05);
+}
+
+.tab-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Log Stream View */
+.log-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.log-entry {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    transition: transform 0.2s;
+    animation: fadeIn 0.3s ease;
+}
+
+.log-entry.error {
+    border-color: var(--danger-red);
+    background: rgba(255, 69, 58, 0.08);
+}
+
+.log-entry.warn {
+    border-color: var(--warn-amber);
+    background: rgba(255, 179, 0, 0.08);
+}
+
+.log-meta {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-family: var(--font-mono);
+    margin-bottom: 4px;
+}
+
+.log-payload {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    padding: 8px;
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #a5f3fc;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* FinOps Stats Cards */
+.finops-summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.stat-card {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 14px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.stat-val {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--emerald);
+    margin-top: 4px;
+    font-family: var(--font-mono);
+}
+
+/* BigQuery Telemetry Table */
+.bq-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    margin-top: 10px;
+}
+
+.bq-table th {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.bq-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: #e2e8f0;
+}
+
+/* Architecture Spec Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.spec-modal-box {
+    background: #0f172a;
+    border: 1px solid var(--emerald);
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 229, 153, 0.3);
+}
+
+.spec-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: var(--emerald);
+}
+
+.spec-desc {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.spec-code {
+    background: #030712;
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #7dd3fc;
+    white-space: pre-wrap;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.btn-close {
+    margin-top: 18px;
+    padding: 10px 20px;
+    background: var(--emerald);
+    color: #000;
+    font-weight: 800;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    float: right;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+}

@@ -1,97 +1,82 @@
-# ⚽ Antigravity 3D Soccer - FIFA Virtual League & AI Suite
+# 🏛️ ESMERALDA Studio & ⚽ Antigravity 3D Virtual Hub
 
-Videojuego de fútbol virtual en 3D avanzado con experiencia inmersiva estilo FIFA / EA FC, física balística en tiempo real, múltiples clubes oficiales, estadios legendarios y suite de módulos de Inteligencia Artificial.
+Bienvenido a la suite de innovación y desarrollo de **Antigravity**. Este repositorio contiene dos aplicaciones interactivas de vanguardia:
+
+1. **🏛️ ESMERALDA Studio (`esmeralda.html`):** Simulador gráfico y visual de la arquitectura empresarial de Google Cloud para Agentes de IA en producción (`google/esmeralda`).
+2. **⚽ Antigravity 3D Soccer (`index.html`):** Videojuego 3D interactivo de fútbol estilo FIFA con estadios, clubes reales y física balística en tiempo real.
+3. **🧠 AI Suite (`src/`):** Módulos Python para RAG, Agentes Autónomos y Visión Multimodal con Gemini.
 
 ---
 
-## 🎮 Jugar Antigravity 3D Soccer
+## 🏛️ 1. ESMERALDA Studio - Architecture Explorer
 
-¡No requiere instalar motores pesados! Ejecútalo directamente en tu navegador (Google Chrome, Safari, Edge):
+Simulador visual e interactivo diseñado para entender y demostrar el blueprint de grado comercial de Google Cloud:
 
 ```bash
-# Abrir directamente en macOS:
+# Abrir directamente en tu navegador:
+open esmeralda.html
+```
+
+### 🌟 Capacidades Ilustradas:
+* **El Mundo de Arriba (`/apps`):**
+  * **Root Coordinator Agent:** Orquestador en Vertex AI Reasoning Engine.
+  * **Protocolo Agente-a-Agente (A2A):** Delegación de tareas sobre túneles seguros Private Service Connect (PSC).
+  * **Ecosistema MCP (Model Context Protocol):** Microservicios de herramientas desacoplados en Cloud Run (`legacy-dms`, `income-verification`, `corporate-email`).
+  * **Gemini 3.7 Flash:** Inferencia y razonamiento estructurado.
+* **El Mundo de Abajo (`/infrastructure`):**
+  * **Central Agent Gateway:** Validación estricta de identidades criptográficas SPIFFE Workload mTLS.
+  * **Model Armor:** Detección de ataques de inyección de prompt (*jailbreak*) y sanitización de datos confidenciales (PII).
+  * **FinOps & Observabilidad:** Registro en vivo de tokens consumidos, costo acumulado en USD y audit sinks transmitiendo a BigQuery.
+  * **Resiliencia (Circuit Breaker):** Aislamiento de microservicios con fallas y degradación elegante.
+
+### 🎮 Demostraciones Interactivas Incluidas:
+1. **🏦 Evaluación Hipotecaria (A2A + MCP):** Flujo completo de aprobación de crédito con consulta a DMS legado, verificación de nómina y envío de resolución por email corporativo.
+2. **🛑 Ataque Adversario (Model Armor Defense):** Intento de inyección de prompt y extracción de bases de datos bloqueado en el perímetro de seguridad.
+3. **⚡ Fallo de Servicio (Circuit Breaker):** Simulación de caída de un sistema legado y activación de fallback en caché sin interrumpir el flujo.
+
+---
+
+## ⚽ 2. Antigravity 3D Soccer - FIFA Virtual League
+
+Videojuego de fútbol virtual en 3D avanzado ejecutable directamente en el navegador con Three.js:
+
+```bash
 open index.html
 ```
 
-O abre `index.html` con doble clic desde tu explorador de archivos.
-
----
-
-## ⭐ Características del Juego 3D
-
-### 1. 🏟️ Estadios Legendarios 3D
-* **Santiago Bernabéu (Madrid):** Techo metálico, iluminación nocturna brillante con 4 torres de focos LED y césped impecable a rayas.
-* **Spotify Camp Nou (Barcelona):** Gradas azulgranas masivas, atmósfera de atardecer y corte de césped ajedrezado.
-* **Wembley Stadium (Londres):** Icónico arco estructural, tribunas rojas y blancas, atmósfera majestuosa.
-* **La Bombonera (Buenos Aires):** Gradas verticales auriazules, vibrante ambiente y tribunas pegadas a la cancha.
-
-### 2. 🛡️ Clubes y Plantillas Reales
-* **Real Madrid (93):** Courtois, Carvajal, Rüdiger, Valverde, Bellingham, Rodrygo, Mbappé, Vinícius Jr.
-* **FC Barcelona (91):** Ter Stegen, Koundé, Araújo, Balde, Pedri, De Jong, Lamine Yamal, Lewandowski, Raphinha.
-* **Manchester City (93):** Ederson, Walker, Rúben Dias, Rodri, De Bruyne, Bernardo Silva, Foden, Haaland.
-* **Inter Miami CF (87):** Callender, Jordi Alba, Sergio Busquets, Messi, Luis Suárez.
-* **Boca Juniors (86):** Romero, Advíncula, Marcos Rojo, Zenón, Cavani, Merentiel.
-* **River Plate (86):** Armani, Acuña, Pezzella, Mastantuono, Borja, Colidio.
-
-### 3. 🎯 Controles de Juego
-
-| Acción | Teclas (PC / Mac) |
-|---|---|
-| **Moverse / Regatear** | `W`, `A`, `S`, `D` o Flechas del teclado |
-| **Sprint / Acelerar** | `Shift` (mientras te mueves) |
-| **Disparo a Gol (Potencia cargable)** | `Espacio` o `J` (mantener para cargar barra de potencia) |
-| **Pase Corto al pie** | `K` o `X` |
-| **Pase al Hueco / Filtrado** | `L` o `C` |
-| **Cambiar Jugador activo** | `Q` o `E` |
-| **Cambiar Ángulo de Cámara** | `V` (Tele Broadcast, Action Cam, Tactical) |
-| **Silenciar / Activar Sonido** | `M` |
-
-### 4. 🚀 Motor y Física en Tiempo Real
-* **Gráficos 3D:** Construido con Three.js, sombras suaves (PCFSoftShadowMap), reflejos y vallas publicitarias LED animadas.
-* **Física Balística:** Gravedad realista, fricción con el césped, efecto rebote elástico en palos/travesaño y amortiguación en redes de portería.
-* **Sonido Sintetizado (Web Audio API):** Silbato realista de árbitro, impacto de golpeo de balón, sonido metálico en postes y rugido dinámico del público en ocasiones de gol.
-* **Minimapa Radar 2D:** Muestra en tiempo real la posición de los 22 futbolistas y el balón en la cancha.
-* **Celebración Cinemática:** Cámaras lentas 360°, pancarta de ¡GOOOOL! y lluvia de confeti tras cada anotación.
+### Características:
+* **Estadios 3D:** Santiago Bernabéu, Spotify Camp Nou, Wembley Stadium y La Bombonera.
+* **Clubes y Plantillas Reales:** Real Madrid, FC Barcelona, Manchester City, Inter Miami, Boca Juniors y River Plate.
+* **Física Balística:** Rebotes en postes/red, control del balón y trayectoria con efecto.
+* **Sonido Sintetizado en Vivo:** Silbatos de árbitro, impacto de balón y cánticos de la hinchada con Web Audio API.
 
 ---
 
 ## 📁 Estructura del Repositorio
 
 ```text
-├── index.html                 # Punto de entrada del juego 3D
+├── esmeralda.html             # 🏛️ ESMERALDA Studio: Interfaz interactiva de la arquitectura
+├── index.html                 # ⚽ Antigravity 3D Soccer: Juego de fútbol virtual 3D
 ├── css/
-│   └── style.css              # Interfaz moderna FIFA / EA FC (Scoreboard, Radar, Menús)
+│   ├── esmeralda.css          # Estilos de consola Google Cloud / Vertex AI para Esmeralda
+│   └── style.css              # Estilos modernos estilo EA Sports / FIFA
 ├── js/
-│   ├── constants.js           # Clubes, plantillas, estadios y dimensiones reglamentarias
-│   ├── audio.js               # Motor de sonido procedural (silbatos, hinchada, disparos)
-│   ├── stadium.js             # Generador 3D de estadios, tribunas, arcos y focos
-│   ├── ball.js                # Física balística y colisiones del balón
-│   ├── player.js              # Modelos 3D, animación procedural de zancada e IA
-│   └── game.js                # Controlador de partido, HUD, cámaras y reglas
-├── src/                       # Suite de Inteligencia Artificial (Backend/Python)
+│   ├── esmeralda-core.js      # Motor de simulación de arquitectura, A2A, MCP y Model Armor
+│   ├── esmeralda-ui.js        # Controlador de mapas topológicos, especificaciones y FinOps
+│   ├── constants.js           # Plantillas, estadios y parámetros
+│   ├── audio.js               # Motor de audio procedural
+│   ├── stadium.js             # Generador 3D de estadios Three.js
+│   ├── ball.js                # Física del balón y colisiones
+│   ├── player.js              # Modelos 3D e IA de futbolistas
+│   └── game.js                # Controlador de partido y cámaras
+├── src/                       # Módulos Python de Inteligencia Artificial
 │   ├── config.py              # Variables de entorno
-│   └── modules/
-│       ├── rag.py             # Asistente RAG con documentos
-│       ├── agent.py           # Agentes autónomos
-│       └── vision.py          # Análisis multimodal con Gemini Vision
-├── main.py                    # CLI de IA
+│   └── modules/               # RAG, Agentes y Visión
+├── main.py                    # CLI principal de IA
 └── requirements.txt           # Dependencias Python
 ```
 
 ---
 
-## 🛠️ Instalación y Desarrollo
-
-### 1. Clonar el repositorio
-```bash
-git clone git@github.com:ivancamargo-rgb/labantigravity.git
-cd labantigravity
-```
-
-### 2. Ejecutar el juego
-Basta con abrir `index.html` en cualquier navegador web.
-
----
-
 ## 📄 Licencia
-Este proyecto está bajo la Licencia MIT.
+Este proyecto está bajo la Licencia MIT y las especificaciones de referencia bajo Apache 2.0 (Google Cloud).

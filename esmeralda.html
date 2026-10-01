@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESMERALDA Studio - Enterprise AI Agent Architecture Explorer</title>
+    <link rel="stylesheet" href="css/esmeralda.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="app-bar">
+        <div class="brand-section">
+            <div class="brand-logo">
+                <span style="font-size: 22px;">🏛️</span>
+                <span>ESMERALDA Studio</span>
+            </div>
+            <span class="brand-badge">Google Cloud Blueprint</span>
+            <span style="font-size: 13px; color: var(--text-secondary); margin-left: 8px;">
+                AI Agent Production Architecture
+            </span>
+        </div>
+
+        <div class="system-status-pills">
+            <div class="status-pill">
+                <div class="status-dot"></div>
+                <span>Shared VPC: 10.128.0.0/20</span>
+            </div>
+            <div class="status-pill">
+                <div class="status-dot"></div>
+                <span>mTLS: SPIFFE Validated</span>
+            </div>
+            <div class="status-pill">
+                <div class="status-dot" style="background: #00c1ff; box-shadow: 0 0 8px #00c1ff;"></div>
+                <span>Model Armor: ACTIVE</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Interactive Scenarios Bar -->
+    <section class="scenario-bar">
+        <span class="scenario-title">Demostraciones del Framework:</span>
+        <button id="btn-scenario-mortgage" class="scenario-btn active">
+            <span>🏦</span>
+            <span>1. Evaluación Hipotecaria (A2A + MCP)</span>
+        </button>
+        <button id="btn-scenario-adversarial" class="scenario-btn danger">
+            <span>🛑</span>
+            <span>2. Ataque Adversario (Model Armor Defense)</span>
+        </button>
+        <button id="btn-scenario-circuit" class="scenario-btn">
+            <span>⚡</span>
+            <span>3. Fallo de Servicio (Circuit Breaker)</span>
+        </button>
+    </section>
+
+    <!-- Main Workspace Split -->
+    <main class="main-workspace">
+        <!-- LEFT: Interactive Topology Map -->
+        <section class="topology-panel">
+            <!-- The World Above (/apps) -->
+            <div class="world-zone world-above">
+                <div class="zone-header">
+                    <div>
+                        <strong style="color: var(--vertex-cyan); font-size: 15px;">EL MUNDO DE ARRIBA (/apps)</strong>
+                        <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">
+                            Capa de Inteligencia, Razonamiento Gemini y Herramientas MCP
+                        </div>
+                    </div>
+                    <span class="zone-badge badge-above">Google ADK & Vertex AI</span>
+                </div>
+
+                <div class="nodes-grid">
+                    <!-- Root Agent -->
+                    <div class="arch-node" data-node-id="root-agent">
+                        <div class="node-title">
+                            <span>🧠</span>
+                            <span>Root Coordinator</span>
+                        </div>
+                        <div class="node-subtitle">Vertex AI Reasoning Engine</div>
+                        <div class="node-tech-tag">Gemini 3.7 Flash</div>
+                    </div>
+
+                    <!-- A2A Protocol Tunnel -->
+                    <div class="arch-node" data-node-id="a2a-protocol">
+                        <div class="node-title">
+                            <span>🔄</span>
+                            <span>A2A Protocol Tunnel</span>
+                        </div>
+                        <div class="node-subtitle">Private Service Connect (PSC)</div>
+                        <div class="node-tech-tag">mTLS / Internal HTTP/2</div>
+                    </div>
+
+                    <!-- Mortgage Specialist -->
+                    <div class="arch-node" data-node-id="specialist-agent">
+                        <div class="node-title">
+                            <span>👔</span>
+                            <span>Specialist Agent</span>
+                        </div>
+                        <div class="node-subtitle">Mortgage Underwriting Specialist</div>
+                        <div class="node-tech-tag">ReAct / Multi-Turn</div>
+                    </div>
+
+                    <!-- Gemini Foundation Model -->
+                    <div class="arch-node" data-node-id="gemini-model">
+                        <div class="node-title">
+                            <span>⚡</span>
+                            <span>Gemini Foundation API</span>
+                        </div>
+                        <div class="node-subtitle">google-genai / Vertex AI Endpoint</div>
+                        <div class="node-tech-tag">1M Context / Structured JSON</div>
+                    </div>
+                </div>
+
+                <!-- MCP Tools Microservices Tier -->
+                <div style="margin-top: 14px;">
+                    <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase;">
+                        Microservicios de Herramientas MCP (Model Context Protocol en Cloud Run)
+                    </div>
+                    <div class="nodes-grid">
+                        <div class="arch-node" data-node-id="mcp-dms">
+                            <div class="node-title"><span>📂</span><span>Legacy DMS</span></div>
+                            <div class="node-subtitle">Document Management System</div>
+                            <div class="node-tech-tag">mcp://legacy-dms</div>
+                        </div>
+
+                        <div class="arch-node" data-node-id="mcp-income">
+                            <div class="node-title"><span>💰</span><span>Income Verification</span></div>
+                            <div class="node-subtitle">Payroll & Tax Gateway</div>
+                            <div class="node-tech-tag">mcp://income-verification</div>
+                        </div>
+
+                        <div class="arch-node" data-node-id="mcp-email">
+                            <div class="node-title"><span>✉️</span><span>Corporate Email</span></div>
+                            <div class="node-subtitle">Formal Resolution Dispatcher</div>
+                            <div class="node-tech-tag">mcp://corporate-email</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The World Below (/infrastructure) -->
+            <div class="world-zone world-below">
+                <div class="zone-header">
+                    <div>
+                        <strong style="color: var(--emerald); font-size: 15px;">EL MUNDO DE ABAJO (/infrastructure)</strong>
+                        <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">
+                            Plataforma Declarativa, Seguridad Zero-Trust y Gobernanza (Terragrunt 5-Stage)
+                        </div>
+                    </div>
+                    <span class="zone-badge badge-below">Terraform / Zero-Trust</span>
+                </div>
+
+                <div class="nodes-grid">
+                    <!-- Client Ingress -->
+                    <div class="arch-node" data-node-id="ingress">
+                        <div class="node-title"><span>🌐</span><span>Ingress & IAP</span></div>
+                        <div class="node-subtitle">Cloud Load Balancer + OAuth2</div>
+                        <div class="node-tech-tag">Stage 2 Ingress</div>
+                    </div>
+
+                    <!-- Central Agent Gateway -->
+                    <div class="arch-node" data-node-id="gateway">
+                        <div class="node-title"><span>🛡️</span><span>Central Gateway</span></div>
+                        <div class="node-subtitle">SPIFFE Workload mTLS Proxy</div>
+                        <div class="node-tech-tag">Stage 5 AGENT_TO_ANYWHERE</div>
+                    </div>
+
+                    <!-- Model Armor -->
+                    <div class="arch-node" data-node-id="model-armor">
+                        <div class="node-title"><span>🔒</span><span>Model Armor</span></div>
+                        <div class="node-subtitle">Prompt Injection & PII Guardrails</div>
+                        <div class="node-tech-tag">Stage 5 SecOps</div>
+                    </div>
+
+                    <!-- FinOps & Telemetry -->
+                    <div class="arch-node" data-node-id="finops">
+                        <div class="node-title"><span>📊</span><span>FinOps & BigQuery</span></div>
+                        <div class="node-subtitle">Per-Token Billing & Audit Sinks</div>
+                        <div class="node-tech-tag">Stage 5 Observability</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; font-size: 11px; color: var(--text-secondary); padding: 4px;">
+                💡 <em>Haz clic en cualquier nodo para inspeccionar su código Terraform / especificación GCP.</em>
+            </div>
+        </section>
+
+        <!-- RIGHT: Console, Logs & Specs -->
+        <section class="console-panel">
+            <!-- Tabs Navigation -->
+            <nav class="tabs-nav">
+                <button class="tab-btn active" data-tab="tab-stream">Live Workflow Stream</button>
+                <button class="tab-btn" data-tab="tab-finops">FinOps & BigQuery</button>
+                <button class="tab-btn" data-tab="tab-protocols">Protocolos (MCP / A2A)</button>
+                <button class="tab-btn" data-tab="tab-blueprint">Blueprint Guide</button>
+            </nav>
+
+            <!-- Tab 1: Live Event Stream -->
+            <div id="tab-stream" class="tab-content active">
+                <div class="log-stream" id="log-stream">
+                    <!-- Dynamic logs stream in here -->
+                </div>
+            </div>
+
+            <!-- Tab 2: FinOps & BigQuery -->
+            <div id="tab-finops" class="tab-content">
+                <div class="finops-summary">
+                    <div class="stat-card">
+                        <div class="stat-label">Tokens Totales Procesados</div>
+                        <div class="stat-val" id="stat-tokens">14,155</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Gasto Acumulado Estimado</div>
+                        <div class="stat-val" id="stat-cost">$0.04518 USD</div>
+                    </div>
+                </div>
+
+                <div style="font-weight: 700; font-size: 12px; margin-bottom: 8px; color: var(--emerald);">
+                    Audit Sink en Tiempo Real: `esmeralda_finops.audit_logs` (BigQuery)
+                </div>
+                <table class="bq-table">
+                    <thead>
+                        <tr>
+                            <th>TIMESTAMP</th>
+                            <th>ETAPA</th>
+                            <th>COMPONENTE</th>
+                            <th>MENSAJE / PAYLOAD</th>
+                            <th>ESTADO</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bq-table-body">
+                        <!-- Populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Tab 3: Protocol Inspector -->
+            <div id="tab-protocols" class="tab-content">
+                <div style="margin-bottom: 14px;">
+                    <h4 style="color: var(--vertex-cyan); font-size: 13px; margin-bottom: 6px;">Protocolo MCP (Model Context Protocol - JSON-RPC 2.0)</h4>
+                    <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+                        Los agentes se comunican con microservicios externos mediante contratos abiertos estandarizados por Anthropic y soportados por Google Cloud:
+                    </p>
+                    <pre class="log-payload">{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "verify_payroll",
+    "arguments": {
+      "taxIdMasked": "RFC-PEGA******-***",
+      "declaredSalary": 5800
+    }
+  },
+  "id": "mcp_call_001"
+}</pre>
+                </div>
+
+                <div>
+                    <h4 style="color: var(--emerald); font-size: 13px; margin-bottom: 6px;">Protocolo A2A (Agent-to-Agent Bus)</h4>
+                    <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+                        Transmisión de delegación de metas entre el Coordinador Raíz y el Especialista con identidad criptográfica:
+                    </p>
+                    <pre class="log-payload">{
+  "envelope": {
+    "version": "1.2",
+    "spiffe_sender": "spiffe://esmeralda.gcp/ns/workloads/sa/root-agent",
+    "spiffe_recipient": "spiffe://esmeralda.gcp/ns/workloads/sa/mortgage-specialist",
+    "correlation_id": "a2a_req_7489f30"
+  },
+  "payload": {
+    "goal": "EVALUATE_MORTGAGE_APPLICATION",
+    "requested_amount": 240000,
+    "property_valuation": 310000
+  }
+}</pre>
+                </div>
+            </div>
+
+            <!-- Tab 4: Blueprint Architecture Guide -->
+            <div id="tab-blueprint" class="tab-content">
+                <div style="line-height: 1.6; font-size: 13px; color: #cbd5e1;">
+                    <h3 style="color: var(--emerald); font-size: 16px; margin-bottom: 10px;">Progresión de 5 Etapas de Terragrunt en ESMERALDA</h3>
+                    
+                    <p style="margin-bottom: 12px;">
+                        Para garantizar aislamiento estricto y despliegues sin interrupciones, el repositorio organiza la infraestructura de Google Cloud en 5 etapas secuenciales:
+                    </p>
+
+                    <ol style="margin-left: 20px; margin-bottom: 16px;">
+                        <li style="margin-bottom: 8px;"><strong>Stage 1 (Projects):</strong> Creación de proyectos aislados para Ingress, Redes, Cargas de trabajo y Gobernanza.</li>
+                        <li style="margin-bottom: 8px;"><strong>Stage 2 (Networking):</strong> Despliegue de Shared VPC, subredes privadas y Private Service Connect (PSC).</li>
+                        <li style="margin-bottom: 8px;"><strong>Stage 3 (Security & KMS):</strong> Llaves CMEK administradas por el cliente, Secret Manager y cuentas de servicio mínimas.</li>
+                        <li style="margin-bottom: 8px;"><strong>Stage 4 (Workloads):</strong> Reasoning Engines en Vertex AI y microservicios de herramientas en Cloud Run.</li>
+                        <li style="margin-bottom: 8px;"><strong>Stage 5 (Governance):</strong> Central Agent Gateway, Model Armor, sinks de auditoría en BigQuery y tableros FinOps.</li>
+                    </ol>
+
+                    <div style="background: rgba(0, 229, 153, 0.08); border: 1px solid var(--emerald); border-radius: 8px; padding: 12px;">
+                        <strong>Principio Hermético:</strong> <em>"Lo que está abajo es como lo que está arriba"</em>. Los ingenieros de IA en <code>/apps</code> construyen agentes rápidos con el Google ADK sin preocuparse por la nube, mientras los ingenieros de plataforma en <code>/infrastructure</code> garantizan seguridad de grado bancario.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Architecture Specification Modal -->
+    <div id="spec-modal" class="modal-overlay">
+        <div class="spec-modal-box">
+            <h3 id="modal-title" class="spec-title">Detalle del Nodo</h3>
+            <p id="modal-desc" class="spec-desc">Descripción técnica del componente.</p>
+            <pre id="modal-code" class="spec-code"></pre>
+            <button id="btn-close-modal" class="btn-close">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/esmeralda-core.js"></script>
+    <script src="js/esmeralda-ui.js"></script>
+</body>
+</html>
